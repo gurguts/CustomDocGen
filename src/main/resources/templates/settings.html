@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Налаштування - Генератор Документів</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/settings.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚙️ Налаштування програми</h1>
+            <div class="header-actions">
+                <a href="/" class="btn btn-secondary">◄ Повернутись до форми</a>
+            </div>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="fields">📝 Поля форми</button>
+            <button class="tab-btn" data-tab="templates">📄 Шаблони документів</button>
+        </div>
+
+        <div id="fields-tab" class="tab-content active">
+            <div class="section-header">
+                <h2>Керування полями форми</h2>
+                <button id="addFieldBtn" class="btn btn-primary">+ Додати поле</button>
+            </div>
+            
+            <div id="fieldsList" class="items-list">
+
+            </div>
+        </div>
+
+        <div id="templates-tab" class="tab-content">
+            <div class="section-header">
+                <h2>Керування шаблонами документів</h2>
+                <button id="addTemplateBtn" class="btn btn-primary">+ Додати шаблон</button>
+            </div>
+            
+            <div id="templatesList" class="items-list">
+            </div>
+        </div>
+
+        <div id="notification" class="notification"></div>
+    </div>
+
+    <div id="fieldModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="fieldModalTitle">Додати поле</h3>
+                <span class="close">&times;</span>
+            </div>
+            <form id="fieldForm">
+                <input type="hidden" id="fieldId">
+                
+                <div class="form-group">
+                    <label for="fieldDisplayName">Назва для відображення <span class="required">*</span></label>
+                    <input type="text" id="fieldDisplayName" required placeholder="Наприклад: Номер контракту">
+                    <small>Як це поле буде називатися у формі</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="fieldPlaceholder">Плейсхолдер у шаблоні <span class="required">*</span></label>
+                    <input type="text" id="fieldPlaceholder" required placeholder="Наприклад: {{CONTRACT_NUMBER}}">
+                    <small>Використовуйте формат {{ІМ'Я}} великими літерами</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="fieldIdInput">ID поля <span class="required">*</span></label>
+                    <input type="text" id="fieldIdInput" required placeholder="Наприклад: contractNumber">
+                    <small>Унікальний ідентифікатор (латиницею, без пробілів)</small>
+                </div>
+
+                <div class="form-row">
+                <div class="form-group">
+                    <label for="fieldType">Тип поля</label>
+                    <select id="fieldType" onchange="toggleFormulaField()">
+                        <option value="text">Текст</option>
+                        <option value="textarea">Багаторядковий текст</option>
+                        <option value="date">Дата</option>
+                        <option value="number">Число</option>
+                        <option value="formula">Формула</option>
+                    </select>
+                </div>
+
+                    <div class="form-group">
+                        <label for="fieldOrder">Порядок відображення</label>
+                        <input type="number" id="fieldOrder" value="1" min="1">
+                    </div>
+                </div>
+
+                <div class="form-group" id="formulaGroup" style="display: none;">
+                    <label for="fieldFormula">Формула <span class="required">*</span></label>
+                    <input type="text" id="fieldFormula" placeholder="Наприклад: {{OLD_NUMBER}}/100">
+                    <small>Використовуйте плейсхолдери інших полів та математичні операції (+, -, *, /)</small>
+                </div>
+
+                <div class="form-group" id="decimalPlacesGroup" style="display: none;">
+                    <label for="fieldDecimalPlaces">Кількість знаків після коми</label>
+                    <input type="number" id="fieldDecimalPlaces" min="0" max="10" placeholder="Авто">
+                    <small>Залиште порожнім для автоматичного формату. 0 = ціле число, 2 = 5.00, 3 = 5.123</small>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="fieldRequired">
+                        Обов'язкове поле
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label class="checkbox-label">
+                        <input type="checkbox" id="fieldRememberValues">
+                        Запам'ятовувати значення
+                    </label>
+                    <small>Якщо увімкнено, введені значення будуть зберігатися та відображатися у випадаючому списку при наступному використанні</small>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Зберегти</button>
+                    <button type="button" class="btn btn-secondary close-modal">Скасувати</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="templateModal" class="modal">
+        <div class="modal-content modal-large">
+            <div class="modal-header">
+                <h3 id="templateModalTitle">Додати шаблон</h3>
+                <span class="close">&times;</span>
+            </div>
+            <form id="templateForm">
+                <input type="hidden" id="templateId">
+                
+                <div class="form-group">
+                    <label for="templateDisplayName">Назва шаблону <span class="required">*</span></label>
+                    <input type="text" id="templateDisplayName" required placeholder="Наприклад: Invoice">
+                </div>
+
+                <div class="form-group">
+                    <label for="templateIdInput">ID шаблону <span class="required">*</span></label>
+                    <input type="text" id="templateIdInput" required placeholder="Наприклад: invoice">
+                    <small>Унікальний ідентифікатор (латиницею, без пробілів)</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="templateFile">Файл шаблону <span class="required">*</span></label>
+                    <div class="file-upload-group">
+                        <input type="file" id="templateFile" accept=".docx,.xlsx">
+                        <span id="currentFileName" class="current-file"></span>
+                    </div>
+                    <small>Завантажте файл .docx або .xlsx з плейсхолдерами</small>
+                </div>
+
+                <div class="form-group">
+                    <label for="downloadPattern">Патерн імені файлу <span class="required">*</span></label>
+                    <input type="text" id="downloadPattern" required placeholder="Наприклад: Invoice_{{CONTRACT_NUMBER}}.docx">
+                    <small>Можна використовувати плейсхолдери для динамічного імені (.docx або .xlsx)</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Обов'язкові поля для генерації <span class="required">*</span></label>
+                    <div id="requiredFieldsCheckboxes" class="checkbox-group">
+
+                    </div>
+                    <small>Оберіть поля, які повинні бути заповнені для генерації цього документа</small>
+                </div>
+
+                <div class="modal-actions">
+                    <button type="submit" class="btn btn-primary">Зберегти</button>
+                    <button type="button" class="btn btn-secondary close-modal">Скасувати</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/settings.js"></script>
+</body>
+</html>
+

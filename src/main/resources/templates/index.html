@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор Таможенных Документов</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚢 Генератор Таможенных Документов</h1>
+            <div class="header-links">
+                <a href="/form" class="form-link">📝 Динамическая форма</a>
+                <a href="/settings" class="settings-link">⚙️ Настройки</a>
+            </div>
+        </header>
+
+        <form id="documentForm">
+            <div class="form-section">
+                <h2>Информация о контракте</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="contractNumber">Номер контракта <span class="required">*</span></label>
+                        <input type="text" id="contractNumber" name="contractNumber" placeholder="Введите номер контракта">
+                    </div>
+                    <div class="form-group">
+                        <label for="contractDate">Дата контракта <span class="required">*</span></label>
+                        <input type="date" id="contractDate" name="contractDate">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Информация о транспорте и грузе</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="vehicleNumber">Номер автомобиля <span class="required">*</span></label>
+                        <input type="text" id="vehicleNumber" name="vehicleNumber" placeholder="Введите номер автомобиля">
+                    </div>
+                    <div class="form-group">
+                        <label for="weight">Вес <span class="required">*</span></label>
+                        <input type="text" id="weight" name="weight" placeholder="Введите вес">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="batchNumber">Номер партии</label>
+                        <input type="text" id="batchNumber" name="batchNumber" placeholder="Введите номер партии">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Информация о грузополучателе</h2>
+                <div class="form-group">
+                    <label for="consigneeName">Название грузополучателя <span class="required">*</span></label>
+                    <input type="text" id="consigneeName" name="consigneeName" placeholder="Введите название грузополучателя">
+                </div>
+                <div class="form-group">
+                    <label for="consigneeAddress">Адрес грузополучателя <span class="required">*</span></label>
+                    <textarea id="consigneeAddress" name="consigneeAddress" rows="3" placeholder="Введите адрес грузополучателя"></textarea>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Информация о товаре</h2>
+                <div class="form-group">
+                    <label for="productNameEn">Товар на английском <span class="required">*</span></label>
+                    <input type="text" id="productNameEn" name="productNameEn" placeholder="Product name in English">
+                </div>
+                <div class="form-group">
+                    <label for="productNameUk">Товар на украинском <span class="required">*</span></label>
+                    <input type="text" id="productNameUk" name="productNameUk" placeholder="Назва товару українською">
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Информация о получателе</h2>
+                <div class="form-group">
+                    <label for="receiverName">Название получателя</label>
+                    <input type="text" id="receiverName" name="receiverName" placeholder="Введите название получателя">
+                </div>
+                <div class="form-group">
+                    <label for="receiverAddress">Адрес получателя</label>
+                    <textarea id="receiverAddress" name="receiverAddress" rows="3" placeholder="Введите адрес получателя"></textarea>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Место разгрузки</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="unloadingPlace">Место разгрузки товара</label>
+                        <input type="text" id="unloadingPlace" name="unloadingPlace" placeholder="Введите место разгрузки">
+                    </div>
+                    <div class="form-group">
+                        <label for="unloadingCountry">Страна разгрузки товара</label>
+                        <input type="text" id="unloadingCountry" name="unloadingCountry" placeholder="Введите страну разгрузки">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <p class="info-text">
+                    <span class="required">*</span> - обязательные поля для генерации Инвойса
+                </p>
+            </div>
+
+            <div class="button-section">
+                <button type="button" id="downloadInvoiceBtn" class="btn btn-primary" disabled>
+                    📄 Скачать Инвойс
+                </button>
+                <button type="button" id="clearFormBtn" class="btn btn-secondary">
+                    🔄 Очистить форму
+                </button>
+            </div>
+        </form>
+
+        <div id="notification" class="notification"></div>
+    </div>
+
+    <script src="/js/script.js"></script>
+</body>
+</html>
+

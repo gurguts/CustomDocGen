@@ -1,0 +1,140 @@
+{
+  "fields" : [ {
+    "id" : "contractNumber",
+    "placeholder" : "{{CONTRACT_NUMBER}}",
+    "displayName" : "Номер контракта",
+    "fieldType" : "text",
+    "required" : true,
+    "order" : 1,
+    "formula" : null,
+    "calculated" : false,
+    "isCalculated" : false
+  }, {
+    "id" : "contractDate",
+    "placeholder" : "{{CONTRACT_DATE}}",
+    "displayName" : "Дата контракта",
+    "fieldType" : "date",
+    "required" : true,
+    "order" : 2,
+    "formula" : null,
+    "calculated" : false,
+    "isCalculated" : false
+  }, {
+    "id" : "vehicleNumber",
+    "placeholder" : "{{VEHICLE_NUMBER}}",
+    "displayName" : "Номер автомобиля",
+    "fieldType" : "text",
+    "required" : true,
+    "order" : 3,
+    "formula" : null,
+    "calculated" : false,
+    "isCalculated" : false
+  }, {
+    "id" : "weight",
+    "placeholder" : "{{WEIGHT}}",
+    "displayName" : "Вес",
+    "fieldType" : "number",
+    "required" : true,
+    "order" : 4,
+    "formula" : null,
+    "calculated" : false,
+    "isCalculated" : false
+  }, {
+    "id" : "consigneeName",
+    "placeholder" : "{{CONSIGNEE_NAME}}",
+    "displayName" : "Название грузополучателя",
+    "fieldType" : "text",
+    "required" : true,
+    "order" : 5,
+    "formula" : null,
+    "calculated" : false,
+    "isCalculated" : false
+  }, {
+    "id" : "consigneeAddress",
+    "placeholder" : "{{CONSIGNEE_ADDRESS}}",
+    "displayName" : "Адрес грузополучателя",
+    "fieldType" : "textarea",
+    "required" : true,
+    "order" : 6,
+    "formula" : null,
+    "calculated" : false,
+    "isCalculated" : false
+  }, {
+    "id" : "productNameEn",
+    "placeholder" : "{{PRODUCT_NAME_EN}}",
+    "displayName" : "Товар на английском",
+    "fieldType" : "text",
+    "required" : true,
+    "order" : 7,
+    "formula" : null,
+    "calculated" : false,
+    "isCalculated" : false
+  }, {
+    "id" : "productNameUk",
+    "placeholder" : "{{PRODUCT_NAME_UK}}",
+    "displayName" : "Товар на украинском",
+    "fieldType" : "text",
+    "required" : true,
+    "order" : 8,
+    "formula" : null,
+    "calculated" : false,
+    "isCalculated" : false
+  }, {
+    "id" : "receiverName",
+    "placeholder" : "{{RECEIVER_NAME}}",
+    "displayName" : "Название получателя",
+    "fieldType" : "text",
+    "required" : false,
+    "order" : 9,
+    "formula" : null,
+    "calculated" : false,
+    "isCalculated" : false
+  }, {
+    "id" : "receiverAddress",
+    "placeholder" : "{{RECEIVER_ADDRESS}}",
+    "displayName" : "Адрес получателя",
+    "fieldType" : "textarea",
+    "required" : false,
+    "order" : 10,
+    "formula" : null,
+    "calculated" : false,
+    "isCalculated" : false
+  }, {
+    "id" : "batchNumber",
+    "placeholder" : "{{BATCH_NUMBER}}",
+    "displayName" : "Номер партии",
+    "fieldType" : "text",
+    "required" : false,
+    "order" : 11,
+    "formula" : null,
+    "calculated" : false,
+    "isCalculated" : false
+  }, {
+    "id" : "unloadingPlace",
+    "placeholder" : "{{UNLOADING_PLACE}}",
+    "displayName" : "Место разгрузки товара",
+    "fieldType" : "text",
+    "required" : false,
+    "order" : 12,
+    "formula" : null,
+    "calculated" : false,
+    "isCalculated" : false
+  }, {
+    "id" : "unloadingCountry",
+    "placeholder" : "{{UNLOADING_COUNTRY}}",
+    "displayName" : "Страна разгрузки товара",
+    "fieldType" : "text",
+    "required" : false,
+    "order" : 13,
+    "formula" : null,
+    "calculated" : false,
+    "isCalculated" : false
+  } ],
+  "templates" : [ {
+    "id" : "invoice",
+    "fileName" : "invoice_template.docx",
+    "displayName" : "Invoice",
+    "downloadPattern" : "Invoice_{{CONTRACT_NUMBER}}.docx",
+    "requiredFieldIds" : [ "contractNumber", "contractDate", "vehicleNumber", "weight", "consigneeName", "consigneeAddress", "productNameEn", "productNameUk" ]
+  } ]
+}

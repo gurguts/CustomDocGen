@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор Документів</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/dynamic-form.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🚢 Генератор Документів</h1>
+            <a href="/settings" class="settings-link">⚙️ Налаштування</a>
+        </header>
+
+        <form id="dynamicForm">
+            <div id="formFields">
+                <div class="loading">
+                    <div class="spinner"></div>
+                    <p>Завантаження форми...</p>
+                </div>
+            </div>
+
+            <div class="button-section">
+                <button type="button" id="checkAvailabilityBtn" class="btn btn-secondary" disabled>
+                    🔍 Перевірити доступні документи
+                </button>
+                <button type="button" id="clearFormBtn" class="btn btn-secondary">
+                    🔄 Очистити форму
+                </button>
+            </div>
+
+            <div id="availableDocuments" class="documents-section" style="display: none;">
+                <h2>📄 Доступні документи для завантаження</h2>
+                <div id="documentsList">
+                </div>
+            </div>
+        </form>
+
+        <div id="notification" class="notification"></div>
+    </div>
+
+    <script src="/js/dynamic-form.js"></script>
+</body>
+</html>
+

@@ -3,7 +3,6 @@ package com.customsdocgen.customsdocgen.services;
 import com.customsdocgen.customsdocgen.models.DocumentData;
 import com.customsdocgen.customsdocgen.models.FieldConfig;
 import com.customsdocgen.customsdocgen.models.TemplateConfig;
-import lombok.RequiredArgsConstructor;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.poi.xwpf.usermodel.*;
@@ -161,6 +160,8 @@ public class DocumentGenerationService {
             String runText = run.getText(0);
             if (runText != null && !runText.isEmpty()) {
 
+                VerticalAlign vertAlign = getVerticalAlign(run);
+
                 RunStyleInfo styleInfo = new RunStyleInfo(
                     currentPos,
                     currentPos + runText.length(),
@@ -169,7 +170,8 @@ public class DocumentGenerationService {
                     run.isBold(),
                     run.isItalic(),
                     run.getColor(),
-                    run.getUnderline()
+                    run.getUnderline(),
+                    vertAlign
                 );
                 styleInfoList.add(styleInfo);
                 
@@ -373,6 +375,33 @@ public class DocumentGenerationService {
     }
     
 
+    private VerticalAlign getVerticalAlign(XWPFRun run) {
+        try {
+            if (run.getCTR() != null && run.getCTR().getRPr() != null) {
+                org.openxmlformats.schemas.wordprocessingml.x2006.main.CTRPr rPr = run.getCTR().getRPr();
+                
+                try (org.apache.xmlbeans.XmlCursor cursor = rPr.newCursor()) {
+                    cursor.toFirstChild();
+                    do {
+                        if ("vertAlign".equals(cursor.getName().getLocalPart())) {
+                            String val = cursor.getAttributeText(new javax.xml.namespace.QName("http://schemas.openxmlformats.org/wordprocessingml/2006/main", "val"));
+                            if ("superscript".equals(val)) {
+                                return VerticalAlign.SUPERSCRIPT;
+                            } else if ("subscript".equals(val)) {
+                                return VerticalAlign.SUBSCRIPT;
+                            } else {
+                                return VerticalAlign.BASELINE;
+                            }
+                        }
+                    } while (cursor.toNextSibling());
+                }
+            }
+        } catch (Exception e) {
+
+        }
+        return null;
+    }
+    
     private boolean stylesMatch(RunStyleInfo style1, RunStyleInfo style2) {
         if (style1 == null || style2 == null) {
             return style1 == style2;
@@ -382,7 +411,8 @@ public class DocumentGenerationService {
                style1.bold == style2.bold &&
                style1.italic == style2.italic &&
                java.util.Objects.equals(style1.color, style2.color) &&
-               style1.underline == style2.underline;
+               style1.underline == style2.underline &&
+               java.util.Objects.equals(style1.subscript, style2.subscript);
     }
     
 
@@ -403,6 +433,9 @@ public class DocumentGenerationService {
         if (styleInfo.underline != null && styleInfo.underline != UnderlinePatterns.NONE) {
             run.setUnderline(styleInfo.underline);
         }
+        if (styleInfo.subscript != null) {
+            run.setSubscript(styleInfo.subscript);
+        }
     }
     
 
@@ -415,9 +448,11 @@ public class DocumentGenerationService {
         boolean italic;
         String color;
         UnderlinePatterns underline;
+        VerticalAlign subscript;
         
         RunStyleInfo(int startPos, int endPos, String fontFamily, Double fontSize,
-                    boolean bold, boolean italic, String color, UnderlinePatterns underline) {
+                    boolean bold, boolean italic, String color, UnderlinePatterns underline,
+                    VerticalAlign subscript) {
             this.startPos = startPos;
             this.endPos = endPos;
             this.fontFamily = fontFamily;
@@ -426,6 +461,7 @@ public class DocumentGenerationService {
             this.italic = italic;
             this.color = color;
             this.underline = underline;
+            this.subscript = subscript;
         }
     }
 
